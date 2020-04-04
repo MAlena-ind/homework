@@ -6,12 +6,13 @@
 # #     Если специальный символ введен после нескольких чисел,
 # # то вначале нужно добавить сумму этих чисел к полученной ранее сумме и после этого завершить программу.
 
-
-
-
-"""Cделано начало"""
-
 def sum_numbers(numbers, result=0):
+    """Из введенных пользователем чисел в строке создадим список. Считаем, что при первом вводе не числа не вводились.
+    Затем каждый элемент списка приведем к int.
+    Суммируем все числа полученного int-списка + прибавляем предыдущий результат, если он был.
+    Возвращаем сумму
+
+    """
 
     number_list = numbers.split()
 
@@ -22,10 +23,37 @@ def sum_numbers(numbers, result=0):
         i += 1
     return sum(number_list_int) + result
 
-numbers_1 = input('Введите числа, разделяя их пробелом. По окончании строки нажмите Enter: ')
-result_1 = sum_numbers(numbers_1)
-print(result_1)
-numbers_2 = input('Продолжайте ввод, будем суммировать дальше. Введите числа через пробел. По окончании - Enter: ')
 
-result_2 = sum_numbers(numbers_2, result_1)
-print(result_2)
+
+numbers = input('Введите числа, разделяя их пробелом. По окончании строки нажмите Enter: ')
+result = sum_numbers(numbers)
+print(result)
+
+while True:
+   
+   # Создаем бесконечный цикл. Проверяем последний введенный элемент каждой введенной пользователем последовательности
+   # на число / не число (методом try - except). Если "число" - опять вызываем функцию и прибавляем новые цифры
+   # к полученному ранее результату. 
+   # Если последнее не число, то числа, если они есть в данном вводе , прибавляем к полученному ранее результату 
+   # и завершаем программу.
+        
+    numbers = input('Продолжайте ввод, будем суммировать дальше. Введите числа через пробел. По окончании - Enter. \n'
+                    'При вводе прочих символов (не чисел) программа завершит свою работу: ')
+    number_list_w = numbers.split()
+    number_end_w = number_list_w.pop()
+
+    try:
+        number_end_w = int(number_end_w)
+    except ValueError:
+        print('Последнее вводимое - не число')
+        number_list_int_w = []
+        for i in range(len(number_list_w)):
+            number_list_int_w.append(int(number_list_w[i]))
+            i += 1
+
+        result_except = sum(number_list_int_w) + result
+        print('Программа завершила свою работу. Результат: ', result_except)
+        break
+    result = sum_numbers(numbers, result)
+    print(result)
+    continue
